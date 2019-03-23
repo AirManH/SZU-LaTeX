@@ -1,46 +1,49 @@
-\documentclass[a4paper, UTF8]{ctexart}
-%调整页边距
-\usepackage{geometry}
-%取消页首页眉编号
-\pagestyle{empty}
-%设置中文编号
-\usepackage{CJKnumb}
-\usepackage[bf, big, raggedright]{titlesec}
-\titleformat{\section}{\bfseries\songti\zihao{4}}{\CJKnumber{\thesection}、}{0em}{}
-%
-\usepackage{tabularx}
-\usepackage{booktabs}
+\documentclass[a4paper, UTF8]{article}
+\usepackage{ctex}
+\usepackage{geometry} %改变页面格式
+\usepackage{CJKnumb} %中文计数
+\usepackage{titlesec} %section标题格式设置
+\usepackage{tabularx} %绘制自适应长度表格
+\usepackage{booktabs} %绘制三线表
 \usepackage{setspace}
-\usepackage{pdfpages}
-%For empty line
+\usepackage{pdfpages} %插入pdf
+%---------GLOBAL Settings----------------
+\pagestyle{empty} %取消页眉、编号
+\titleformat{\section}{\bfseries\Fakesongti\zihao{4}}{\CJKnumber{\thesection}、}{0em}{}
+\ctexset{
+	autoindent = true % 即便字体大小变化，首段自动缩进相应两个字体字宽的长度
+}
+%-------------MACRO-----------------------------
+%产生特定的空白行
 \newcommand{\FirstSpace}{\vspace{33pt}}
 \newcommand{\SecondSpace}{\vspace{55.5pt}}
 \newcommand{\NormalSpace}{\vspace{35pt}}
 \newcommand{\LastSpace}{\vspace{30pt}}
-%Font set
-\newenvironment{TitleFont}{\songti \zihao{2} \bfseries}{}
-\newenvironment{NormalFont}{\songti \zihao{4} \bfseries}{}
-\newenvironment{LastFont}{\songti \zihao{-4} \bfseries}{}
-%To print table
-\newcolumntype{Y}{>{\centering\arraybackslash}X}
-%Print a normal line
+%字体设置 (see document of xeCJK for more informations)
+\newCJKfontfamily\Fakesongti{宋体}[AutoFakeBold] %宋体 = SimSun, \Fakesongti = 可以加粗的“伪宋体”
+\newenvironment{TitleFont}{\Fakesongti \zihao{2} \bfseries}{}
+\newenvironment{NormalFont}{\Fakesongti \zihao{4} \bfseries}{}
+\newenvironment{LastFont}{\Fakesongti \zihao{-4} \bfseries}{}
+%Print a normal specific table
 \newcommand{\NormalRow}[2]{
 	\begin{tabularx}{\textwidth}{cY}
 		#1：& #2 \\
 		\cmidrule{2-2}
 	\end{tabularx}
 }
-%Print a line with 3 items
+%Print a specific table with 3 items
 \newcommand{\ThreeRow}[6]{
 	\begin{tabularx}{\textwidth}{cccccY}
 		#1: & #2 & #3: & #4 & #5: & #6 \\
 		\cmidrule{2-2} \cmidrule{4-4} \cmidrule{6-6}
 	\end{tabularx}
 }
+%在tabularx环境中使用。自适应长度且居中。
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
 
 \begin{document}
-%------------------------------------------------
-%首页
+%------------------首页------------------------
+
 	%Infact in Word it is [top=2.54cm, bottom=2.54cm, left=3.17cm, right=3.17cm]
 	\newgeometry{top=2.54cm, bottom=2.54cm, left=4.45cm, right=4.45cm}
 
@@ -84,13 +87,12 @@
 	\LastSpace
 	
 	\begin{LastFont} \hspace{9em} 教务部制 \end{LastFont}
-%------------------------------------------------
-%正文部分
+%------------正文部分------------------------
+
 	\newpage
 	\newgeometry{top=2.54cm, bottom=2.54cm, left=3.17cm, right=3.17cm}
-	\CJKindent
-	\songti \zihao{5}
-	%
+	\Fakesongti \zihao{5}
+	
 	\section{实验目的}
 	
 	\section{实验步骤与结果}
@@ -101,8 +103,8 @@
 	
 	\section{实验心得}
 	
-%%------------------------------------------------
-%教师评测部分
+%----------教师评测部分-------------------------------
+
 	\newpage
 	\includepdf[pages=1]{back_cover.pdf}
 \end{document}
